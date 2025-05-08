@@ -1,0 +1,20 @@
+CREATE TABLE properties (
+    id SERIAL PRIMARY KEY,
+    board_id TEXT NOT NULL,
+    card_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    location_ar TEXT NOT NULL,
+    location_en TEXT NOT NULL,
+    lot TEXT NOT NULL,
+    type TEXT NOT NULL,
+    status TEXT NOT NULL,
+    owner TEXT NOT NULL,
+    area NUMERIC(10, 2) NOT NULL,
+    shares NUMERIC(10, 2) NOT NULL,
+    is_organized BOOLEAN NOT NULL,
+    is_effects BOOLEAN NOT NULL,
+    labels TEXT[],
+    attachments TEXT[],
+    comments TEXT[],
+    updated_at TIMESTAMP NOT NULL
+);

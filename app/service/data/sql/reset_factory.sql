@@ -1,0 +1,1 @@
+TRUNCATE properties, jobs, errors;

@@ -1,0 +1,73 @@
+The `tr-extractor` project extracts trello cards given a board ID, stores card metadata to a local database storage.
+
+The project provides a user interface on [Notion](https://notion.com).
+
+## Macro Architecture
+
+- Backend
+    - Golang deployed on Railway
+- Database
+    - Postgres (with Vector support) deployed in Railway 
+- Automations
+    - Make.com
+- Frontend
+    - Notion (rendedred on multiple views)
+    - Google Sheet
+
+## Tools
+
+The following tools are used in this project:
+
+| Tool            | Description                       | Fee |
+|-----------------|-----------------------------------|----------|
+| [Make.com](https://us2.make.com) | Automation Platform | $9 Monthly for 10,000 ops |
+| [Railway](https://railway.com/) | App Deployment Platform: App + Postgres Database | $5 Monthly for 8 GB/8 vCPU |
+| [Notion](https://notion.com) | Wiki, Databases, Sites, etc Platform | $10 Monthly |
+| [Google Sheets](https://docs.google.com/spreadsheets) | Spreadsheet | Free Tier |
+
+## Deployment
+
+Currently the deployment is manual to Railway. But the following are some improvements:
+
+### Railway
+
+- Install CLI
+- Automate Deployment using API
+- Export the database:
+
+```bash
+pg_dump -h monorail.proxy.rlwy.net -p 11397 -U postgres -d railway -F c -f ./dba/dumps/railway_backup_$(date +"%Y-%m-%d").dump
+```
+
+- Import the database:
+
+```bash
+pg_restore --host=monorail.proxy.rlwy.net --port=11397 --username=postgres --dbname=railway --format=c ./dba/dumps/backup_2025-02-13.dump
+```
+
+```bash
+psql --host=monorail.proxy.rlwy.net --port=11397 --username=postgres --dbname=railway -f ./dba/dumps/backup_2025-02-13.sql
+```
+
+### Make.com
+
+- Stop Automations via API
+- Start Automations via API
+
+## Automations
+
+These automations require Trello board IDs and and a Trello API Key: 
+
+| Automation      | Description                       | Interval | 
+|-----------------|-----------------------------------|----------|
+| Refresh            | Request property cards be pulled from Trello using API  | Every 3 hrs |
+| Google Sheet         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Google sheet properties   | Triggered by Refresh |
+| Notion         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Notion properties database   | Triggered by Refresh |
+
+## Phases
+
+### Phase 1 - Population and Organization
+
+### Phase 2 - Automation 
+
+### Phase 3 - Knowledge Base Powered by AI

@@ -1,0 +1,10 @@
+select * from jobs order by id desc limit 50;
+select * from jobs where state = 'running';
+--delete from jobs where state = 'running';
+select * from jobs where id = 590;
+select * from jobs ORDER BY STARTED_AT DESC LIMIT 10;
+SELECT * FROM jobs WHERE STATE = 'completed' ORDER BY started_at DESC LIMIT 10;
+select * from jobs ORDER BY started_at DESC LIMIT 10;
+-- delete from jobs where id < 592;
+select * from errors;
+-- delete from errors;
