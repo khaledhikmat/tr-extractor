@@ -78,8 +78,22 @@ These automations require Trello board IDs and and a Trello API Key:
 
 ## Phases
 
-### Phase 1 - Population and Organization
+### Phase 1 - Organization and Population 
+
+Phase 1 organizes Trello boards and populats them with useful and relevant data. These are the most importat boards:
+
+- Properties
+- Inheritance Confinments
+- Supportive Documents
+- Expenses
 
 ### Phase 2 - Automation 
 
+- Pull Trello cards every 3 hours and store in a PostgresSQL database. 
+- Query the Postgres database every 3 hours to update Google Sheet with multiple sheet names: one for each board type.
+- Query the Postgres database every 3 hours to update Notion database and provide different views on the data.
+
 ### Phase 3 - Knowledge Base Powered by AI
+
+- Run a RAG pipeline to produce a provate knpwledge base.
+- Produce a front-end to query the RAG system.
