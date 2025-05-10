@@ -72,7 +72,7 @@ These automations require Trello board IDs and and a Trello API Key:
 
 | Automation      | Description                       | Interval | 
 |-----------------|-----------------------------------|----------|
-| Refresh            | Request property cards be pulled from Trello using API  | Every 3 hrs |
+| Refresh            | Request property cards be pulled from Trello using API  | Every day at 6:00 AM |
 | Google Sheet         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Google sheet properties   | Triggered by Refresh |
 | Notion         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Notion properties database   | Triggered by Refresh |
 
@@ -95,5 +95,5 @@ Phase 1 organizes Trello boards and populats them with useful and relevant data.
 
 ### Phase 3 - Knowledge Base Powered by AI
 
-- Run a RAG pipeline to produce a provate knpwledge base.
+- Run a RAG pipeline to produce a private knowledge base.
 - Produce a front-end to query the RAG system.
