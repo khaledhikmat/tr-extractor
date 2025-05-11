@@ -72,7 +72,7 @@ These automations require Trello board IDs and and a Trello API Key:
 
 | Automation      | Description                       | Interval | 
 |-----------------|-----------------------------------|----------|
-| Refresh            | Request property cards be pulled from Trello using API  | Every day at 6:00 AM |
+| Properties Refresh            | Pull property cards from Trello using API  | Every day at 6:00 AM |
 | Google Sheet         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Google sheet properties   | Triggered by Refresh |
 | Notion         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Notion properties database   | Triggered by Refresh |
 
