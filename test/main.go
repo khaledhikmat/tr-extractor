@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	apiKey  = "10b71c08bf567cfe7d147c1b929b9e4d"
-	token   = "ATTA3300f14fe2ad7a18e2eef202fb3102bf37a895a1f857eb37e1571815ad3e79646BAFEE14"
+	apiKey  = "<key>"
+	token   = "<key>"
 	cardID  = "6809bcb36d41988a3d6f2aac" // your card ID
 	baseURL = "https://api.trello.com/1"
 )
