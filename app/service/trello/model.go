@@ -33,8 +33,10 @@ type TRPropField struct {
 }
 
 type TRPropAttachment struct {
-	Name string `json:"name"`
-	URL  string `json:"url"`
+	ID   string    `json:"id"`
+	Name string    `json:"name"`
+	URL  string    `json:"url"`
+	Date time.Time `json:"date"`
 }
 
 type TRPropComment struct {
@@ -44,21 +46,22 @@ type TRPropComment struct {
 }
 
 type TRProperty struct {
-	ID          string             `json:"id"`
-	Name        string             `json:"name"`
-	LocationAR  string             `json:"locationAR"`
-	LocationEN  string             `json:"locationEN"`
-	Lot         string             `json:"lot"`
-	Type        string             `json:"type"`
-	Status      string             `json:"status"`
-	Owner       string             `json:"owner"`
-	Area        float64            `json:"area"`
-	Shares      float64            `json:"shares"`
-	Organized   bool               `json:"organized"`
-	Effects     bool               `json:"effects"`
-	Labels      []TRPropLabel      `json:"labels"`
-	Fields      []TRPropField      `json:"fields"`
-	Attachments []TRPropAttachment `json:"attachments"`
-	Comments    []TRPropComment    `json:"comments"`
-	UpdatedAt   time.Time          `json:"updatedAt"`
+	ID               string             `json:"id"`
+	Name             string             `json:"name"`
+	LocationAR       string             `json:"locationAR"`
+	LocationEN       string             `json:"locationEN"`
+	Lot              string             `json:"lot"`
+	Type             string             `json:"type"`
+	Status           string             `json:"status"`
+	Owner            string             `json:"owner"`
+	Area             float64            `json:"area"`
+	Shares           float64            `json:"shares"`
+	Organized        bool               `json:"organized"`
+	Effects          bool               `json:"effects"`
+	Labels           []TRPropLabel      `json:"labels"`
+	Fields           []TRPropField      `json:"fields"`
+	Attachments      []TRPropAttachment `json:"attachments"`
+	Comments         []TRPropComment    `json:"comments"`
+	DateLastActivity time.Time          `json:"dateLastActivity"`
+	UpdatedAt        time.Time          `json:"updatedAt"`
 }

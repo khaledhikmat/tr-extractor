@@ -11,6 +11,7 @@ import (
 	"github.com/khaledhikmat/tr-extractor/service/config"
 	"github.com/khaledhikmat/tr-extractor/service/data"
 	"github.com/khaledhikmat/tr-extractor/service/lgr"
+	"github.com/khaledhikmat/tr-extractor/service/storage"
 	"github.com/khaledhikmat/tr-extractor/service/trello"
 	"github.com/mdobak/go-xerrors"
 	"go.opentelemetry.io/otel"
@@ -44,7 +45,8 @@ func Run(canxCtx context.Context,
 	errorStream chan error,
 	cfgsvc config.IService,
 	datasvc data.IService,
-	trsvc trello.IService) error {
+	trsvc trello.IService,
+	storagesvc storage.IService) error {
 	// Setup the Gin router
 	r := gin.Default()
 	cfg := cors.DefaultConfig()
@@ -60,7 +62,7 @@ func Run(canxCtx context.Context,
 	// TODO: Add routes
 
 	// Setup API routes
-	apiRoutes(canxCtx, r, errorStream, cfgsvc, datasvc, trsvc)
+	apiRoutes(canxCtx, r, errorStream, cfgsvc, datasvc, trsvc, storagesvc)
 
 	fn := getRunWithCanxFn(r, ":"+cfgsvc.GetAPIPort())
 	return fn(canxCtx, errorStream)

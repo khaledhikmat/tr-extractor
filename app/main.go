@@ -23,6 +23,7 @@ import (
 	"github.com/khaledhikmat/tr-extractor/service/config"
 	"github.com/khaledhikmat/tr-extractor/service/data"
 	"github.com/khaledhikmat/tr-extractor/service/lgr"
+	"github.com/khaledhikmat/tr-extractor/service/storage"
 	"github.com/khaledhikmat/tr-extractor/service/trello"
 )
 
@@ -64,6 +65,7 @@ func main() {
 	configSvc := config.New()
 	dataSvc := data.New(configSvc)
 	trelloSvc := trello.New(configSvc)
+	storageSvc := storage.NewS3(canxCtx, configSvc)
 
 	// Setup OpenTelemetry
 	shutdown, err := setupOpenTelemetry(rootCtx, configSvc)
@@ -90,7 +92,7 @@ func main() {
 
 	// Run the http server
 	go func() {
-		err = server.Run(canxCtx, errorStream, configSvc, dataSvc, trelloSvc)
+		err = server.Run(canxCtx, errorStream, configSvc, dataSvc, trelloSvc, storageSvc)
 		if err != nil {
 			errorStream <- err
 		}

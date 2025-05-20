@@ -14,7 +14,15 @@ type IService interface {
 	GetDbDSN() string
 	GetTrelloAPIKey() string
 	GetTrelloToken() string
+	GetTrelloReadToken() string
 	GetTrelloBaseURL() string
+	GetTrelloDownloadPath() string
+
+	GetDropboxAccessToken() string
+	GetDropboxUploadPath() string
+
+	GetStorageBucket() string
+	GetStorageRegion() string
 
 	GetPropertiesExcelUpdateWebhook() string
 	GetPropertiesNotionUpdateWebhook() string

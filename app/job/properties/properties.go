@@ -9,6 +9,7 @@ import (
 	"github.com/khaledhikmat/tr-extractor/service/config"
 	"github.com/khaledhikmat/tr-extractor/service/data"
 	"github.com/khaledhikmat/tr-extractor/service/lgr"
+	"github.com/khaledhikmat/tr-extractor/service/storage"
 	"github.com/khaledhikmat/tr-extractor/service/trello"
 	"github.com/khaledhikmat/tr-extractor/utils"
 )
@@ -19,7 +20,8 @@ func Processor(ctx context.Context,
 	errorStream chan error,
 	cfgsvc config.IService,
 	datasvc data.IService,
-	trsvc trello.IService) {
+	trsvc trello.IService,
+	_ storage.IService) {
 
 	// Update job state to running
 	job, err := datasvc.RetrieveJobByID(jobID)
@@ -72,9 +74,10 @@ func Processor(ctx context.Context,
 		default:
 		}
 
+		// If Trello's last activity date is zero, use the current time
 		updatedAt := time.Now()
-		if !trprop.UpdatedAt.IsZero() {
-			updatedAt = trprop.UpdatedAt
+		if !trprop.DateLastActivity.IsZero() {
+			updatedAt = trprop.DateLastActivity
 		}
 
 		// Convert to data model property
@@ -96,6 +99,7 @@ func Processor(ctx context.Context,
 				return label.Name
 			}),
 			Attachments: utils.Map(trprop.Attachments, func(attachment trello.TRPropAttachment) string {
+				// return fmt.Sprintf("%s|%s|%s|%s", trprop.ID, attachment.ID, trprop.Name, attachment.URL)
 				return attachment.URL
 			}),
 			Comments: utils.Map(trprop.Comments, func(comment trello.TRPropComment) string {
@@ -118,13 +122,13 @@ func Processor(ctx context.Context,
 	)
 
 	// Notify the automation webhook to trigger
-	lgr.Logger.Debug("jobproperties.Processor",
-		slog.String("webhookUrl", cfgsvc.GetPropertiesExcelUpdateWebhook()),
-	)
-	err = jobb.PostToAutomationWebhook(cfgsvc.GetPropertiesExcelUpdateWebhook())
-	if err != nil {
-		errorStream <- err
-	}
+	// lgr.Logger.Debug("jobproperties.Processor",
+	// 	slog.String("webhookUrl", cfgsvc.GetPropertiesExcelUpdateWebhook()),
+	// )
+	// err = jobb.PostToAutomationWebhook(cfgsvc.GetPropertiesExcelUpdateWebhook())
+	// if err != nil {
+	// 	errorStream <- err
+	// }
 
 	// Notify the automation webhook to trigger
 	lgr.Logger.Debug("jobproperties.Processor",

@@ -27,6 +27,13 @@ type Property struct {
 	UpdatedAt   time.Time      `json:"updatedAt" db:"updated_at"`
 }
 
+type Attachment struct {
+	ID         int64     `json:"id" db:"id"`
+	TrelloURL  string    `json:"trelloUrl" db:"trello_url"`
+	StorageURL string    `json:"storageUrl" db:"storage_url"`
+	UpdatedAt  time.Time `json:"updatedAt" db:"updated_at"`
+}
+
 type JobState string
 
 const (
@@ -39,7 +46,8 @@ const (
 type JobType string
 
 const (
-	JobTypeProperties JobType = "properties"
+	JobTypeProperties  JobType = "properties"
+	JobTypeAttachments JobType = "attachments"
 )
 
 type Job struct {
