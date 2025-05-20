@@ -9,9 +9,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/khaledhikmat/tr-extractor/service/config"
 	"github.com/khaledhikmat/tr-extractor/service/data"
+	"github.com/khaledhikmat/tr-extractor/service/storage"
 	"github.com/khaledhikmat/tr-extractor/service/trello"
 
 	"github.com/khaledhikmat/tr-extractor/job"
+	jobattachments "github.com/khaledhikmat/tr-extractor/job/attachments"
 	jobprops "github.com/khaledhikmat/tr-extractor/job/properties"
 )
 
@@ -20,7 +22,8 @@ const (
 )
 
 var jobProcs = map[data.JobType]job.Processor{
-	data.JobTypeProperties: jobprops.Processor,
+	data.JobTypeProperties:  jobprops.Processor,
+	data.JobTypeAttachments: jobattachments.Processor,
 }
 
 func apiRoutes(ctx context.Context,
@@ -28,7 +31,8 @@ func apiRoutes(ctx context.Context,
 	errorStream chan error,
 	cfgsvc config.IService,
 	datasvc data.IService,
-	trsvc trello.IService) {
+	trsvc trello.IService,
+	storagesvc storage.IService) {
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -168,7 +172,7 @@ func apiRoutes(ctx context.Context,
 			pageSize = 50
 		}
 
-		id, err := ProcessJob(ctx, job, pageSize, true, errorStream, cfgsvc, datasvc, trsvc)
+		id, err := ProcessJob(ctx, job, pageSize, true, errorStream, cfgsvc, datasvc, trsvc, storagesvc)
 		if err != nil {
 			c.JSON(400, gin.H{
 				"message": fmt.Sprintf("process job produced %s", err.Error()),
@@ -220,7 +224,8 @@ func ProcessJob(ctx context.Context,
 	errorStream chan error,
 	cfgsvc config.IService,
 	datasvc data.IService,
-	trsvc trello.IService) (int64, error) {
+	trsvc trello.IService,
+	storagesvc storage.IService) (int64, error) {
 	fmt.Printf("Processing job %s\n", job.Type)
 	// Validate there is a processor for the job type
 	proc, ok := jobProcs[job.Type]
@@ -247,10 +252,10 @@ func ProcessJob(ctx context.Context,
 
 	if async {
 		// Start the job processor asynchronously
-		go proc(ctx, id, pageSize, errorStream, cfgsvc, datasvc, trsvc)
+		go proc(ctx, id, pageSize, errorStream, cfgsvc, datasvc, trsvc, storagesvc)
 	} else {
 		// Start the job processor synchronously
-		proc(ctx, id, pageSize, errorStream, cfgsvc, datasvc, trsvc)
+		proc(ctx, id, pageSize, errorStream, cfgsvc, datasvc, trsvc, storagesvc)
 	}
 
 	return id, nil

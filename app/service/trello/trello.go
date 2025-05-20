@@ -3,8 +3,12 @@ package trello
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
+	"os"
+	"path/filepath"
+	"regexp"
 	"strconv"
 
 	"github.com/khaledhikmat/tr-extractor/service/config"
@@ -126,6 +130,67 @@ func (svc *trelloService) RetrieveProperties(_ int) ([]TRProperty, error) {
 	}
 
 	return results, nil
+}
+
+func (svc *trelloService) DownloadAttachment(url string) (string, string, string, error) {
+	// Extract the card ID and attachment ID from the URL
+	cardID, attachmentID, extension, err := extractTrelloIDsAndExt(url)
+	if err != nil {
+		return "", "", "", err
+	}
+
+	baseURL := svc.CfgSvc.GetTrelloBaseURL()
+	apiKey := svc.CfgSvc.GetTrelloAPIKey()
+	token := svc.CfgSvc.GetTrelloReadToken()
+
+	filename := fmt.Sprintf("%s%s", attachmentID, extension)
+	downloadURL := fmt.Sprintf("%s/cards/%s/attachments/%s/download", baseURL, cardID, attachmentID)
+	client := &http.Client{}
+
+	req, err := http.NewRequest("GET", downloadURL, nil)
+	if err != nil {
+		return "", "", "", err
+	}
+
+	authHeader := fmt.Sprintf(`OAuth oauth_consumer_key="%s", oauth_token="%s"`, apiKey, token)
+	req.Header.Set("Authorization", authHeader)
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return "", "", "", fmt.Errorf("request error: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(resp.Body)
+		return "", "", "", fmt.Errorf("API error %d: %s", resp.StatusCode, string(body))
+	}
+
+	localPath := filepath.Join(svc.CfgSvc.GetTrelloDownloadPath(), filename)
+	out, err := os.Create(localPath)
+	if err != nil {
+		return "", "", "", err
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return "", "", "", err
+	}
+
+	return localPath, attachmentID, extension, nil
+}
+
+func extractTrelloIDsAndExt(url string) (cardID, attachmentID, extension string, err error) {
+	// Regex: capture cardID, attachmentID, and file extension
+	re := regexp.MustCompile(`cards/([a-f0-9]+)/attachments/([a-f0-9]+)/download/[^/]+(\.[a-zA-Z0-9]+)$`)
+	matches := re.FindStringSubmatch(url)
+
+	if len(matches) != 4 {
+		return "", "", "", fmt.Errorf("no match found")
+	}
+
+	return matches[1], matches[2], matches[3], nil
 }
 
 func fetchProperties(url string) ([]TRProperty, error) {

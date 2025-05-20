@@ -8,6 +8,7 @@ import (
 
 	"github.com/khaledhikmat/tr-extractor/service/config"
 	"github.com/khaledhikmat/tr-extractor/service/data"
+	"github.com/khaledhikmat/tr-extractor/service/storage"
 	"github.com/khaledhikmat/tr-extractor/service/trello"
 )
 
@@ -18,7 +19,8 @@ type Processor func(ctx context.Context,
 	errorStream chan error,
 	cfgsvc config.IService,
 	datasvc data.IService,
-	trsvc trello.IService)
+	trsvc trello.IService,
+	storagesvc storage.IService)
 
 func PostToAutomationWebhook(url string) error {
 	if url == "" {

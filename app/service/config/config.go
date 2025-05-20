@@ -43,12 +43,20 @@ func (svc *configService) GetTrelloToken() string {
 	return os.Getenv("TRELLO_TOKEN")
 }
 
+func (svc *configService) GetTrelloReadToken() string {
+	return os.Getenv("TRELLO_TOKEN_READ")
+}
+
 func (svc *configService) GetTrelloBaseURL() string {
 	if os.Getenv("TRELLO_BASE_URL") == "" {
 		return "https://api.trello.com/1"
 	}
 
 	return os.Getenv("TRELLO_BASE_URL")
+}
+
+func (svc *configService) GetTrelloDownloadPath() string {
+	return os.Getenv("TRELLO_DOWNLOAD_PATH")
 }
 
 func (svc *configService) GetTrelloPropertiesBoardID() string {
@@ -66,6 +74,7 @@ func (svc *configService) GetTrelloExpensesBoardID() string {
 
 	return os.Getenv("TRELLO_EXPENSES_BOARD_ID")
 }
+
 func (svc *configService) GetTrelloInheritanceConfinementsBoardID() string {
 	if os.Getenv("TRELLO_INHERITANCE_CONFINEMENTS_BOARD_ID") == "" {
 		return "5f3c2b4e1a0d3b2f8c4e4d6f"
@@ -73,12 +82,29 @@ func (svc *configService) GetTrelloInheritanceConfinementsBoardID() string {
 
 	return os.Getenv("TRELLO_INHERITANCE_CONFINEMENTS_BOARD_ID")
 }
+
 func (svc *configService) GetTrelloToDosBoardID() string {
 	if os.Getenv("TRELLO_TODO_BOARD_ID") == "" {
 		return "5f3c2b4e1a0d3b2f8c4e4d6f"
 	}
 
 	return os.Getenv("TRELLO_TODO_BOARD_ID")
+}
+
+func (svc *configService) GetDropboxAccessToken() string {
+	return os.Getenv("DROPBOX_ACCESS_TOKEN")
+}
+
+func (svc *configService) GetDropboxUploadPath() string {
+	return os.Getenv("DROPBOX_UPLOAD_PATH")
+}
+
+func (svc *configService) GetStorageBucket() string {
+	return os.Getenv("STORAGE_BUCKET")
+}
+
+func (svc *configService) GetStorageRegion() string {
+	return os.Getenv("STORAGE_REGION")
 }
 
 func (svc *configService) GetPropertiesExcelUpdateWebhook() string {

@@ -9,7 +9,7 @@ clean_dist:
 
 test:
 	echo "Invoking test cases..."
-	#go test ./job/attributes -run TestPosting2Automation -v -count=1
+	#go test ./service/data -run TestDataRetrieveAttachments -v -count=1
 
 build: clean_dist clean_build test
 	GOOS='linux' GOARCH='amd64' GO111MODULE='on' go build -o "${BUILD_DIR}/tr-extractor-app" .

@@ -3,7 +3,9 @@ package data
 import (
 	_ "embed"
 	"fmt"
+	"strings"
 	"sync"
+	"time"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
@@ -22,6 +24,9 @@ var insertpropertySQL string
 
 //go:embed sql/updateproperty.sql
 var updatepropertySQL string
+
+//go:embed sql/insertattachment.sql
+var insertattachmentSQL string
 
 //go:embed sql/insertjob.sql
 var insertjobSQL string
@@ -230,6 +235,118 @@ func (svc *dataService) retrievePropertyByIDs(boardID string, propID string) (Pr
 	}
 
 	return props[0], nil
+}
+
+func (svc *dataService) RetrievePropertyAttachments(_ int) ([]string, error) {
+	var atts []string
+	err := svc.dbConnection()
+	if err != nil {
+		return atts, err
+	}
+
+	// TODO: The query seems to be returning some properties with empty attachments
+	query := `
+        SELECT location_en, name, attachments 
+		FROM properties
+		WHERE array_length(attachments, 1) > 0 
+    `
+
+	rows, err := svc.Db.Query(query)
+	if err != nil {
+		return atts, err
+	}
+	defer rows.Close()
+
+	var allAtts [][]string // Slice of url slices
+
+	// Iterate over the rows
+	for rows.Next() {
+		var location string
+		var name string
+		var tags []string
+		if err := rows.Scan(&location, &name, pq.Array(&tags)); err != nil {
+			return atts, err
+		}
+		//fmt.Printf("%s-%s tags: %d\n", name, location, len(tags))
+
+		// Add postfix to the attachment URL
+		enhancedTags := []string{}
+		for _, tag := range tags {
+			enhancedTags = append(enhancedTags, fmt.Sprintf("%s|properties|%s_%s", tag, normalizeString(location), normalizeString(name)))
+		}
+		//fmt.Printf("%s-%s enhanced tags: %d\n", name, location, len(enhancedTags))
+
+		allAtts = append(allAtts, enhancedTags)
+	}
+
+	// Flatten them into a single slice
+	for _, tagSet := range allAtts {
+		atts = append(atts, tagSet...)
+	}
+
+	return atts, nil
+}
+
+func normalizeString(input string) string {
+	lower := strings.ToLower(input)
+	normalized := strings.ReplaceAll(lower, " ", "_")
+	return normalized
+}
+
+func (svc *dataService) IsAttachmentMapped(url string) (bool, error) {
+	err := svc.dbConnection()
+	if err != nil {
+		return false, err
+	}
+
+	var atts []Attachment
+	query := `
+        SELECT * 
+		FROM attachments
+		WHERE trello_url = $1 
+		LIMIT 1
+    `
+
+	err = svc.Db.Select(&atts, query, url)
+	if err != nil {
+		return false, err
+	}
+
+	if len(atts) == 0 {
+		return false, nil
+	}
+
+	return true, nil
+}
+
+func (svc *dataService) MapAttachment(trelloURL, storageURL string) error {
+	err := svc.dbConnection()
+	if err != nil {
+		return err
+	}
+
+	att := Attachment{
+		TrelloURL:  trelloURL,
+		StorageURL: storageURL,
+		UpdatedAt:  time.Now(),
+	}
+
+	// Execute the insert query using NamedExec or NamedQuery
+	rows, err := svc.Db.NamedQuery(insertattachmentSQL, att)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+
+	// Fetch the newly inserted ID if needed
+	if rows.Next() {
+		err = rows.Scan(&att.ID)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (svc *dataService) NewJob(job Job) (int64, error) {
