@@ -27,6 +27,32 @@ type Property struct {
 	UpdatedAt   time.Time      `json:"updatedAt" db:"updated_at"`
 }
 
+type InheritanceConfinment struct {
+	ID          int64          `json:"id" db:"id"`
+	BoardID     string         `json:"boardId" db:"board_id"`
+	CardID      string         `json:"cardId" db:"card_id"`
+	Name        string         `json:"name" db:"name"`
+	Title       string         `json:"title" db:"title"`
+	Generation  int64          `json:"generation" db:"generation"`
+	Labels      pq.StringArray `json:"labels" db:"labels"`
+	Attachments pq.StringArray `json:"attachments" db:"attachments"`
+	Comments    pq.StringArray `json:"comments" db:"comments"`
+	UpdatedAt   time.Time      `json:"updatedAt" db:"updated_at"`
+}
+
+type SupportiveDoc struct {
+	ID          int64          `json:"id" db:"id"`
+	BoardID     string         `json:"boardId" db:"board_id"`
+	CardID      string         `json:"cardId" db:"card_id"`
+	Name        string         `json:"name" db:"name"`
+	Title       string         `json:"title" db:"title"`
+	Category    string         `json:"category" db:"category"`
+	Labels      pq.StringArray `json:"labels" db:"labels"`
+	Attachments pq.StringArray `json:"attachments" db:"attachments"`
+	Comments    pq.StringArray `json:"comments" db:"comments"`
+	UpdatedAt   time.Time      `json:"updatedAt" db:"updated_at"`
+}
+
 type Attachment struct {
 	ID         int64     `json:"id" db:"id"`
 	TrelloURL  string    `json:"trelloUrl" db:"trello_url"`
@@ -46,8 +72,10 @@ const (
 type JobType string
 
 const (
-	JobTypeProperties  JobType = "properties"
-	JobTypeAttachments JobType = "attachments"
+	JobTypeProperties            JobType = "properties"
+	JobTypeInheitanceConfinments JobType = "inhconfinments"
+	JobTypeSupportiveDocs        JobType = "supportivedocs"
+	JobTypeAttachments           JobType = "attachments"
 )
 
 type Job struct {

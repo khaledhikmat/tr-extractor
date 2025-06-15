@@ -1,4 +1,4 @@
-package jobproperties
+package jobinhconfs
 
 import (
 	"context"
@@ -37,9 +37,9 @@ func Processor(ctx context.Context,
 	}
 
 	errors := 0
-	trprops := []trello.TRProperty{}
+	trprops := []trello.TRInheritanceConfinement{}
 	finalState := data.JobStateCompleted
-	boardID := cfgsvc.GetTrelloPropertiesBoardID()
+	boardID := cfgsvc.GetTrelloInheritanceConfinmentsBoardID()
 
 	defer func() {
 		// Update job state to completed
@@ -55,14 +55,14 @@ func Processor(ctx context.Context,
 		}
 	}()
 
-	// Retrieve properties from Trello
-	trprops, err = trsvc.RetrieveProperties(pageSize)
+	// Retrieve inhconfs from Trello
+	trprops, err = trsvc.RetrieveInheritanceConfinments(pageSize)
 	if err != nil {
 		errorStream <- err
 		errors++
 	}
 
-	// Insert/update properties into the database
+	// Insert/update inhconfs into the database
 	for _, trprop := range trprops {
 
 		// If the context is cancelled, exit the loop
@@ -80,26 +80,21 @@ func Processor(ctx context.Context,
 			updatedAt = trprop.DateLastActivity
 		}
 
-		// Convert to data model property
-		prop := data.Property{
+		if trprop.Title == "" {
+			trprop.Title = trprop.Name
+		}
+
+		// Convert to data model inhconf
+		prop := data.InheritanceConfinment{
 			BoardID:    boardID,
 			CardID:     trprop.ID,
 			Name:       trprop.Name,
-			LocationAR: trprop.LocationAR,
-			LocationEN: trprop.LocationEN,
-			Lot:        trprop.Lot,
-			Type:       trprop.Type,
-			Status:     trprop.Status,
-			Owner:      trprop.Owner,
-			Area:       trprop.Area,
-			Shares:     trprop.Shares,
-			Organized:  trprop.Organized,
-			Effects:    trprop.Effects,
+			Title:      trprop.Title,
+			Generation: trprop.Generation,
 			Labels: utils.Map(trprop.Labels, func(label trello.TRLabel) string {
 				return label.Name
 			}),
 			Attachments: utils.Map(trprop.Attachments, func(attachment trello.TRAttachment) string {
-				// return fmt.Sprintf("%s|%s|%s|%s", trprop.ID, attachment.ID, trprop.Name, attachment.URL)
 				return attachment.URL
 			}),
 			Comments: utils.Map(trprop.Comments, func(comment trello.TRComment) string {
@@ -108,8 +103,8 @@ func Processor(ctx context.Context,
 			UpdatedAt: updatedAt,
 		}
 
-		// Insert or update the property into the database
-		_, _, err := datasvc.NewProperty(prop)
+		// Insert or update the inh confinment into the database
+		_, _, err := datasvc.NewInheritanceConfinment(prop)
 		if err != nil {
 			errorStream <- err
 			errors++
@@ -117,24 +112,24 @@ func Processor(ctx context.Context,
 		}
 	}
 
-	lgr.Logger.Debug("jobproperties.Processor",
+	lgr.Logger.Debug("jobinhconfs.Processor",
 		slog.String("event", "done"),
 	)
 
 	// Notify the automation webhook to trigger
-	// lgr.Logger.Debug("jobproperties.Processor",
-	// 	slog.String("webhookUrl", cfgsvc.GetPropertiesExcelUpdateWebhook()),
+	// lgr.Logger.Debug("jobinhconfs.Processor",
+	// 	slog.String("webhookUrl", cfgsvc.GetInhConfinmentsExcelUpdateWebhook()),
 	// )
-	// err = jobb.PostToAutomationWebhook(cfgsvc.GetPropertiesExcelUpdateWebhook())
+	// err = jobb.PostToAutomationWebhook(cfgsvc.GetInhConfinmentsExcelUpdateWebhook())
 	// if err != nil {
 	// 	errorStream <- err
 	// }
 
 	// Notify the automation webhook to trigger
-	lgr.Logger.Debug("jobproperties.Processor",
-		slog.String("webhookUrl", cfgsvc.GetPropertiesNotionUpdateWebhook()),
+	lgr.Logger.Debug("jobinhconfs.Processor",
+		slog.String("webhookUrl", cfgsvc.GetInhConfinmentsNotionUpdateWebhook()),
 	)
-	err = jobb.PostToAutomationWebhook(cfgsvc.GetPropertiesNotionUpdateWebhook())
+	err = jobb.PostToAutomationWebhook(cfgsvc.GetInhConfinmentsNotionUpdateWebhook())
 	if err != nil {
 		errorStream <- err
 	}

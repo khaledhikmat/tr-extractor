@@ -73,8 +73,11 @@ These automations require Trello board IDs and and a Trello API Key:
 | Automation      | Description                       | Interval | 
 |-----------------|-----------------------------------|----------|
 | Properties Refresh            | Pull property cards from Trello using API  | Every day at 6:00 AM |
-| Google Sheet         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Google sheet properties   | Triggered by Refresh |
 | Notion         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Notion properties database   | Triggered by Refresh |
+| Inheritance Confinments Refresh            | Pull inheritance confinments cards from Trello using API  | Every day at 7:00 AM |
+| Notion         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Notion inheritance confinments database   | Triggered by Refresh |
+| Supportive Docs Refresh            | Pull supportive docs cards from Trello using API  | Every day at 8:00 AM |
+| Notion         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Notion supportive docs database   | Triggered by Refresh |
 
 ## Phases
 
@@ -85,15 +88,15 @@ Phase 1 organizes Trello boards and populats them with useful and relevant data.
 - Properties
 - Inheritance Confinments
 - Supportive Documents
-- Expenses
 
 ### Phase 2 - Automation 
 
-- Pull Trello cards every 3 hours and store in a PostgresSQL database. 
-- Query the Postgres database every 3 hours to update Google Sheet with multiple sheet names: one for each board type.
-- Query the Postgres database every 3 hours to update Notion database and provide different views on the data.
+- Pull Trello cards every day and store in a PostgresSQL database. Please refer to bove schedule. 
+- Trigger a webhook to update Notion properties database and provide different views on the data.
+- Trigger a webhook to update Notion inheritance confinments database and provide different views on the data.
+- Trigger a webhook to update Notion supprotive docs database and provide different views on the data.
 
 ### Phase 3 - Knowledge Base Powered by AI
 
-- Run a RAG pipeline to produce a private knowledge base.
-- Produce a front-end to query the RAG system.
+- Run a pipeline to produce a private knowledge base. Given that the data is structured, we will rely on tools as opposed to RAG to power the search.
+- Produce a front-end to query the KB.

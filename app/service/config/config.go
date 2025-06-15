@@ -61,34 +61,34 @@ func (svc *configService) GetTrelloDownloadPath() string {
 
 func (svc *configService) GetTrelloPropertiesBoardID() string {
 	if os.Getenv("TRELLO_PROPERTIES_BOARD_ID") == "" {
-		return "5f3c2b4e1a0d3b2f8c4e4d6f"
+		return "BXlnOvYt"
 	}
 
 	return os.Getenv("TRELLO_PROPERTIES_BOARD_ID")
 }
 
-func (svc *configService) GetTrelloExpensesBoardID() string {
-	if os.Getenv("TRELLO_EXPENSES_BOARD_ID") == "" {
-		return "5f3c2b4e1a0d3b2f8c4e4d6f"
-	}
-
-	return os.Getenv("TRELLO_EXPENSES_BOARD_ID")
-}
-
-func (svc *configService) GetTrelloInheritanceConfinementsBoardID() string {
+func (svc *configService) GetTrelloInheritanceConfinmentsBoardID() string {
 	if os.Getenv("TRELLO_INHERITANCE_CONFINEMENTS_BOARD_ID") == "" {
-		return "5f3c2b4e1a0d3b2f8c4e4d6f"
+		return "BXlnOvYt"
 	}
 
 	return os.Getenv("TRELLO_INHERITANCE_CONFINEMENTS_BOARD_ID")
 }
 
-func (svc *configService) GetTrelloToDosBoardID() string {
-	if os.Getenv("TRELLO_TODO_BOARD_ID") == "" {
-		return "5f3c2b4e1a0d3b2f8c4e4d6f"
+func (svc *configService) GetTrelloSupportiveDocsBoardID() string {
+	if os.Getenv("TRELLO_SUPPORTIVE_DOCS_BOARD_ID") == "" {
+		return "bOEmEE4S"
 	}
 
-	return os.Getenv("TRELLO_TODO_BOARD_ID")
+	return os.Getenv("TRELLO_SUPPORTIVE_DOCS_BOARD_ID")
+}
+
+func (svc *configService) GetTrelloExpensesBoardID() string {
+	if os.Getenv("TRELLO_EXPENSES_BOARD_ID") == "" {
+		return "bOEmEE4S"
+	}
+
+	return os.Getenv("TRELLO_EXPENSES_BOARD_ID")
 }
 
 func (svc *configService) GetDropboxAccessToken() string {
@@ -121,4 +121,36 @@ func (svc *configService) GetPropertiesNotionUpdateWebhook() string {
 	}
 
 	return os.Getenv("PROPERTIES_NOTION_UPDATE_WEBHOOK")
+}
+
+func (svc *configService) GetInhConfinmentsExcelUpdateWebhook() string {
+	if os.Getenv("INH_CONFINMENTS_EXCEL_UPDATE_WEBHOOK") == "" {
+		return "https://hook.us2.make.com/add"
+	}
+
+	return os.Getenv("INH_CONFINMENTS_EXCEL_UPDATE_WEBHOOK")
+}
+
+func (svc *configService) GetInhConfinmentsNotionUpdateWebhook() string {
+	if os.Getenv("INH_CONFINMENTS_NOTION_UPDATE_WEBHOOK") == "" {
+		return "https://hook.us2.make.com/add"
+	}
+
+	return os.Getenv("INH_CONFINMENTS_NOTION_UPDATE_WEBHOOK")
+}
+
+func (svc *configService) GetSupportiveDocsExcelUpdateWebhook() string {
+	if os.Getenv("SUPPORTIVE_DOCS_EXCEL_UPDATE_WEBHOOK") == "" {
+		return "https://hook.us2.make.com/add"
+	}
+
+	return os.Getenv("SUPPORTIVE_DOCS_EXCEL_UPDATE_WEBHOOK")
+}
+
+func (svc *configService) GetSupportiveDocsNotionUpdateWebhook() string {
+	if os.Getenv("SUPPORTIVE_DOCS_NOTION_UPDATE_WEBHOOK") == "" {
+		return "https://hook.us2.make.com/add"
+	}
+
+	return os.Getenv("SUPPORTIVE_DOCS_NOTION_UPDATE_WEBHOOK")
 }

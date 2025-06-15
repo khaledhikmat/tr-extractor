@@ -62,8 +62,21 @@ func Processor(ctx context.Context,
 	}
 	attachments = append(attachments, propatts...)
 
-	// TODO: Add other attachments from Trello
-	//attachments = append(attachments, inhatts...)
+	// Retrieve inheritance confinment attachments from the database
+	inhatts, err := datasvc.RetrieveInheritanceConfinmentAttachments(pageSize)
+	if err != nil {
+		errorStream <- err
+		return
+	}
+	attachments = append(attachments, inhatts...)
+
+	// Retrieve supportive doc attachments from the database
+	docatts, err := datasvc.RetrieveSupportiveDocAttachments(pageSize)
+	if err != nil {
+		errorStream <- err
+		return
+	}
+	attachments = append(attachments, docatts...)
 
 	// Insert/update property attachments into the database
 	for _, attachmentURL := range attachments {

@@ -14,7 +14,9 @@ import (
 
 	"github.com/khaledhikmat/tr-extractor/job"
 	jobattachments "github.com/khaledhikmat/tr-extractor/job/attachments"
+	jobinhconfs "github.com/khaledhikmat/tr-extractor/job/inhconfs"
 	jobprops "github.com/khaledhikmat/tr-extractor/job/properties"
+	jobdocs "github.com/khaledhikmat/tr-extractor/job/supportivedocs"
 )
 
 const (
@@ -22,8 +24,10 @@ const (
 )
 
 var jobProcs = map[data.JobType]job.Processor{
-	data.JobTypeProperties:  jobprops.Processor,
-	data.JobTypeAttachments: jobattachments.Processor,
+	data.JobTypeProperties:            jobprops.Processor,
+	data.JobTypeAttachments:           jobattachments.Processor,
+	data.JobTypeInheitanceConfinments: jobinhconfs.Processor,
+	data.JobTypeSupportiveDocs:        jobdocs.Processor,
 }
 
 func apiRoutes(ctx context.Context,
@@ -105,6 +109,90 @@ func apiRoutes(ctx context.Context,
 		})
 	})
 
+	r.GET("/inhconfinments", func(c *gin.Context) {
+		isPermitted := isPermitted(c, datasvc)
+		if !isPermitted {
+			c.JSON(403, gin.H{
+				"message": "Invalid or missing API key",
+			})
+			return
+		}
+
+		page, e := strconv.Atoi(c.Query("p"))
+		if e != nil {
+			page = 1
+		}
+
+		pageSize, e := strconv.Atoi(c.Query("s"))
+		if e != nil {
+			pageSize = 50
+		}
+
+		order := c.Query("o")
+		if order == "" {
+			order = "updated_at"
+		}
+
+		dir := c.Query("d")
+		if dir == "" {
+			dir = "desc"
+		}
+
+		props, err := datasvc.RetrieveInheritanceConfinments(page, pageSize, order, dir)
+		if err != nil {
+			c.JSON(400, gin.H{
+				"message": fmt.Sprintf("retrieve inheritance confinments produced %s", err.Error()),
+			})
+			return
+		}
+
+		c.JSON(200, gin.H{
+			"data": props,
+		})
+	})
+
+	r.GET("/suppdocs", func(c *gin.Context) {
+		isPermitted := isPermitted(c, datasvc)
+		if !isPermitted {
+			c.JSON(403, gin.H{
+				"message": "Invalid or missing API key",
+			})
+			return
+		}
+
+		page, e := strconv.Atoi(c.Query("p"))
+		if e != nil {
+			page = 1
+		}
+
+		pageSize, e := strconv.Atoi(c.Query("s"))
+		if e != nil {
+			pageSize = 50
+		}
+
+		order := c.Query("o")
+		if order == "" {
+			order = "updated_at"
+		}
+
+		dir := c.Query("d")
+		if dir == "" {
+			dir = "desc"
+		}
+
+		props, err := datasvc.RetrieveSupportiveDocs(page, pageSize, order, dir)
+		if err != nil {
+			c.JSON(400, gin.H{
+				"message": fmt.Sprintf("retrieve supportive docs produced %s", err.Error()),
+			})
+			return
+		}
+
+		c.JSON(200, gin.H{
+			"data": props,
+		})
+	})
+
 	r.GET("/jobs", func(c *gin.Context) {
 		isPermitted := isPermitted(c, datasvc)
 		if !isPermitted {
@@ -172,7 +260,7 @@ func apiRoutes(ctx context.Context,
 			pageSize = 50
 		}
 
-		id, err := ProcessJob(ctx, job, pageSize, true, errorStream, cfgsvc, datasvc, trsvc, storagesvc)
+		id, err := processJob(ctx, job, pageSize, true, errorStream, cfgsvc, datasvc, trsvc, storagesvc)
 		if err != nil {
 			c.JSON(400, gin.H{
 				"message": fmt.Sprintf("process job produced %s", err.Error()),
@@ -217,7 +305,7 @@ func apiRoutes(ctx context.Context,
 	})
 }
 
-func ProcessJob(ctx context.Context,
+func processJob(ctx context.Context,
 	job data.Job,
 	pageSize int,
 	async bool,

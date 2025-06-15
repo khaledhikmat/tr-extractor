@@ -36,12 +36,10 @@ func (svc *trelloService) RetrieveProperties(_ int) ([]TRProperty, error) {
 
 	searchURL := fmt.Sprintf("%s/boards/%s/cards?key=%s&token=%s",
 		svc.CfgSvc.GetTrelloBaseURL(), boardID, svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken())
-	props, err := fetchProperties(searchURL)
+	props, err := fetchTrelloEntities[TRProperty](searchURL)
 	if err != nil {
 		return results, err
 	}
-
-	// lgr.Logger.Info("\n📌 Retrieved properties:\n", slog.Int("count", len(props)))
 
 	for _, prop := range props {
 		customFields, err := fetchCustomFields(svc.CfgSvc.GetTrelloBaseURL(), svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken(), prop.ID)
@@ -55,7 +53,7 @@ func (svc *trelloService) RetrieveProperties(_ int) ([]TRProperty, error) {
 		}
 
 		for _, cf := range customFields {
-			field := TRPropField{}
+			field := TRField{}
 
 			def := customFieldDefs[cf.IDCustomField]
 			if def.Type == "list" {
@@ -132,6 +130,166 @@ func (svc *trelloService) RetrieveProperties(_ int) ([]TRProperty, error) {
 	return results, nil
 }
 
+func (svc *trelloService) RetrieveInheritanceConfinments(_ int) ([]TRInheritanceConfinement, error) {
+	var results []TRInheritanceConfinement
+
+	boardID := svc.CfgSvc.GetTrelloInheritanceConfinmentsBoardID()
+
+	customFieldDefs, err := fetchCustomFieldDefs(svc.CfgSvc.GetTrelloBaseURL(), svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken(), boardID)
+	if err != nil {
+		return results, err
+	}
+
+	searchURL := fmt.Sprintf("%s/boards/%s/cards?key=%s&token=%s",
+		svc.CfgSvc.GetTrelloBaseURL(), boardID, svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken())
+	entities, err := fetchTrelloEntities[TRInheritanceConfinement](searchURL)
+	if err != nil {
+		return results, err
+	}
+
+	for _, entity := range entities {
+		customFields, err := fetchCustomFields(svc.CfgSvc.GetTrelloBaseURL(), svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken(), entity.ID)
+		if err != nil {
+			return results, err
+		}
+
+		// Exclude properties without custom fields
+		if len(customFields) == 0 {
+			continue
+		}
+
+		for _, cf := range customFields {
+			field := TRField{}
+
+			def := customFieldDefs[cf.IDCustomField]
+			if def.Type == "list" {
+				for _, opt := range def.Options {
+					if opt.ID == cf.IDValue {
+						field.Name = def.Name
+						field.Type = "list"
+						field.Value = opt.Value.Text
+					}
+				}
+			} else {
+				for k, v := range cf.Value {
+					field.Name = def.Name
+					field.Type = k
+					field.Value = fmt.Sprintf("%v", v)
+				}
+			}
+
+			entity.Fields = append(entity.Fields, field)
+			if field.Name == "Generation" {
+				result, err := strconv.ParseInt(field.Value, 10, 64)
+				if err != nil {
+					result = 0
+				}
+				entity.Generation = result
+			} else if field.Name == "Title" {
+				entity.Title = field.Value
+			}
+		}
+
+		if entity.Title == "" {
+			entity.Title = entity.Name
+		}
+
+		attachments, err := fetchAttachments(svc.CfgSvc.GetTrelloBaseURL(), svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken(), entity.ID)
+		if err != nil {
+			return results, err
+		}
+		entity.Attachments = append(entity.Attachments, attachments...)
+
+		comments, err := fetchComments(svc.CfgSvc.GetTrelloBaseURL(), svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken(), entity.ID)
+		if err != nil {
+			return results, err
+		}
+		entity.Comments = append(entity.Comments, comments...)
+
+		results = append(results, entity)
+	}
+
+	return results, nil
+}
+
+func (svc *trelloService) RetrieveSupportiveDocs(_ int) ([]TRSupportiveDoc, error) {
+	var results []TRSupportiveDoc
+
+	boardID := svc.CfgSvc.GetTrelloSupportiveDocsBoardID()
+
+	customFieldDefs, err := fetchCustomFieldDefs(svc.CfgSvc.GetTrelloBaseURL(), svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken(), boardID)
+	if err != nil {
+		return results, err
+	}
+
+	searchURL := fmt.Sprintf("%s/boards/%s/cards?key=%s&token=%s",
+		svc.CfgSvc.GetTrelloBaseURL(), boardID, svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken())
+	entities, err := fetchTrelloEntities[TRSupportiveDoc](searchURL)
+	if err != nil {
+		return results, err
+	}
+
+	for _, entity := range entities {
+		customFields, err := fetchCustomFields(svc.CfgSvc.GetTrelloBaseURL(), svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken(), entity.ID)
+		if err != nil {
+			return results, err
+		}
+
+		// Exclude properties without custom fields
+		if len(customFields) == 0 {
+			continue
+		}
+
+		for _, cf := range customFields {
+			field := TRField{}
+
+			def := customFieldDefs[cf.IDCustomField]
+			if def.Type == "list" {
+				for _, opt := range def.Options {
+					if opt.ID == cf.IDValue {
+						field.Name = def.Name
+						field.Type = "list"
+						field.Value = opt.Value.Text
+					}
+				}
+			} else {
+				for k, v := range cf.Value {
+					field.Name = def.Name
+					field.Type = k
+					field.Value = fmt.Sprintf("%v", v)
+				}
+			}
+
+			entity.Fields = append(entity.Fields, field)
+			if field.Name == "Category" {
+				entity.Category = field.Value
+			} else if field.Name == "Title" {
+				entity.Title = field.Value
+			}
+		}
+
+		if entity.Title == "" {
+			entity.Title = entity.Name
+		}
+
+		attachments, err := fetchAttachments(svc.CfgSvc.GetTrelloBaseURL(), svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken(), entity.ID)
+		if err != nil {
+			return results, err
+		}
+		entity.Attachments = append(entity.Attachments, attachments...)
+
+		comments, err := fetchComments(svc.CfgSvc.GetTrelloBaseURL(), svc.CfgSvc.GetTrelloAPIKey(), svc.CfgSvc.GetTrelloToken(), entity.ID)
+		if err != nil {
+			return results, err
+		}
+		entity.Comments = append(entity.Comments, comments...)
+
+		results = append(results, entity)
+	}
+
+	return results, nil
+}
+
 func (svc *trelloService) DownloadAttachment(url string) (string, string, string, error) {
 	// Extract the card ID and attachment ID from the URL
 	cardID, attachmentID, extension, err := extractTrelloIDsAndExt(url)
@@ -193,8 +351,8 @@ func extractTrelloIDsAndExt(url string) (cardID, attachmentID, extension string,
 	return matches[1], matches[2], matches[3], nil
 }
 
-func fetchProperties(url string) ([]TRProperty, error) {
-	var props []TRProperty
+func fetchTrelloEntities[T any](url string) ([]T, error) {
+	var props []T
 	resp, err := http.Get(url)
 	if err != nil {
 		return props, err
@@ -213,7 +371,7 @@ func fetchProperties(url string) ([]TRProperty, error) {
 	return props, nil
 }
 
-func fetchCustomFieldDefs(baseURL, apiKey, token, boardID string) (map[string]trPropCustomFieldDef, error) {
+func fetchCustomFieldDefs(baseURL, apiKey, token, boardID string) (map[string]trCustomFieldDef, error) {
 	url := fmt.Sprintf("%s/boards/%s/customFields?key=%s&token=%s", baseURL, boardID, apiKey, token)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -221,11 +379,11 @@ func fetchCustomFieldDefs(baseURL, apiKey, token, boardID string) (map[string]tr
 	}
 	defer resp.Body.Close()
 
-	var defs []trPropCustomFieldDef
+	var defs []trCustomFieldDef
 	body, _ := ioutil.ReadAll(resp.Body)
 	json.Unmarshal(body, &defs)
 
-	defMap := make(map[string]trPropCustomFieldDef)
+	defMap := make(map[string]trCustomFieldDef)
 	for _, def := range defs {
 		defMap[def.ID] = def
 	}
@@ -233,8 +391,8 @@ func fetchCustomFieldDefs(baseURL, apiKey, token, boardID string) (map[string]tr
 	return defMap, nil
 }
 
-func fetchCustomFields(baseURL, apiKey, token, cardID string) ([]trPropCustomFieldItem, error) {
-	var fields []trPropCustomFieldItem
+func fetchCustomFields(baseURL, apiKey, token, cardID string) ([]trCustomFieldItem, error) {
+	var fields []trCustomFieldItem
 	url := fmt.Sprintf("%s/cards/%s/customFieldItems?key=%s&token=%s", baseURL, cardID, apiKey, token)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -247,8 +405,8 @@ func fetchCustomFields(baseURL, apiKey, token, cardID string) ([]trPropCustomFie
 	return fields, nil
 }
 
-func fetchAttachments(baseURL, apiKey, token, cardID string) ([]TRPropAttachment, error) {
-	var attachments []TRPropAttachment
+func fetchAttachments(baseURL, apiKey, token, cardID string) ([]TRAttachment, error) {
+	var attachments []TRAttachment
 	url := fmt.Sprintf("%s/cards/%s/attachments?key=%s&token=%s", baseURL, cardID, apiKey, token)
 	resp, err := http.Get(url)
 	if err != nil {
@@ -261,8 +419,8 @@ func fetchAttachments(baseURL, apiKey, token, cardID string) ([]TRPropAttachment
 	return attachments, nil
 }
 
-func fetchComments(baseURL, apiKey, token, cardID string) ([]TRPropComment, error) {
-	var comments []TRPropComment
+func fetchComments(baseURL, apiKey, token, cardID string) ([]TRComment, error) {
+	var comments []TRComment
 	url := fmt.Sprintf("%s/cards/%s/actions?filter=commentCard&key=%s&token=%s", baseURL, cardID, apiKey, token)
 	resp, err := http.Get(url)
 	if err != nil {
