@@ -7,9 +7,9 @@ type IService interface {
 	IsOpenTelemetry() bool
 
 	GetTrelloPropertiesBoardID() string
+	GetTrelloInheritanceConfinmentsBoardID() string
+	GetTrelloSupportiveDocsBoardID() string
 	GetTrelloExpensesBoardID() string
-	GetTrelloInheritanceConfinementsBoardID() string
-	GetTrelloToDosBoardID() string
 
 	GetDbDSN() string
 	GetTrelloAPIKey() string
@@ -26,4 +26,10 @@ type IService interface {
 
 	GetPropertiesExcelUpdateWebhook() string
 	GetPropertiesNotionUpdateWebhook() string
+
+	GetInhConfinmentsExcelUpdateWebhook() string
+	GetInhConfinmentsNotionUpdateWebhook() string
+
+	GetSupportiveDocsExcelUpdateWebhook() string
+	GetSupportiveDocsNotionUpdateWebhook() string
 }

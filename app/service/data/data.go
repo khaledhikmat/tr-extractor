@@ -25,6 +25,18 @@ var insertpropertySQL string
 //go:embed sql/updateproperty.sql
 var updatepropertySQL string
 
+//go:embed sql/insertinhconf.sql
+var insertinhconfSQL string
+
+//go:embed sql/updateinhconf.sql
+var updateinhconfSQL string
+
+//go:embed sql/insertsupportivedoc.sql
+var insertsupportivedocSQL string
+
+//go:embed sql/updatesupportivedoc.sql
+var updatesupportivedocSQL string
+
 //go:embed sql/insertattachment.sql
 var insertattachmentSQL string
 
@@ -275,6 +287,408 @@ func (svc *dataService) RetrievePropertyAttachments(_ int) ([]string, error) {
 			enhancedTags = append(enhancedTags, fmt.Sprintf("%s|properties|%s_%s", tag, normalizeString(location), normalizeString(name)))
 		}
 		//fmt.Printf("%s-%s enhanced tags: %d\n", name, location, len(enhancedTags))
+
+		allAtts = append(allAtts, enhancedTags)
+	}
+
+	// Flatten them into a single slice
+	for _, tagSet := range allAtts {
+		atts = append(atts, tagSet...)
+	}
+
+	return atts, nil
+}
+
+func (svc *dataService) NewInheritanceConfinment(prop InheritanceConfinment) (bool, int64, error) {
+	err := svc.dbConnection()
+	if err != nil {
+		return false, -1, err
+	}
+
+	// Make sure that property does not already exist
+	p, err := svc.retrieveInheritanceConfinmentByIDs(prop.BoardID, prop.CardID)
+	if err != nil {
+		return false, -1, fmt.Errorf("Error fetching inh conf by ID: %v", err)
+	}
+
+	// If the property already exists, switch to update the attributes
+	if p.CardID != "" {
+		err = svc.UpdateInheritanceConfinment(&prop)
+		return false, prop.ID, err
+	}
+
+	// Convert to args so it can be used with the database
+	args := map[string]interface{}{
+		"board_id":    prop.BoardID,
+		"card_id":     prop.CardID,
+		"name":        prop.Name,
+		"title":       prop.Title,
+		"generation":  prop.Generation,
+		"labels":      pq.Array(prop.Labels),
+		"attachments": pq.Array(prop.Attachments),
+		"comments":    pq.Array(prop.Comments),
+	}
+
+	// Execute the insert query using NamedExec or NamedQuery
+	rows, err := svc.Db.NamedQuery(insertinhconfSQL, args)
+	if err != nil {
+		return false, -1, err
+	}
+	defer rows.Close()
+
+	// Fetch the newly inserted ID if needed
+	if rows.Next() {
+		err = rows.Scan(&prop.ID)
+		if err != nil {
+			return false, -1, err
+		}
+	}
+
+	return true, prop.ID, nil
+}
+
+func (svc *dataService) UpdateInheritanceConfinment(prop *InheritanceConfinment) error {
+	err := svc.dbConnection()
+	if err != nil {
+		return err
+	}
+
+	// Make sure the property does exist
+	p, err := svc.retrieveInheritanceConfinmentByIDs(prop.BoardID, prop.CardID)
+	if err != nil {
+		return fmt.Errorf("error fetching inh conf by ID: %v", err)
+	}
+
+	if p.CardID == "" {
+		return fmt.Errorf("card ID %s does not exist", p.CardID)
+	}
+
+	_, err = svc.Db.Exec(
+		updateinhconfSQL,
+		prop.BoardID,
+		prop.CardID,
+		prop.Name,
+		prop.Title,
+		prop.Generation,
+		pq.Array(prop.Labels),
+		pq.Array(prop.Attachments),
+		pq.Array(prop.Comments),
+		p.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (svc *dataService) RetrieveInheritanceConfinments(page, pageSize int, orderBy, orderDir string) ([]InheritanceConfinment, error) {
+	props := []InheritanceConfinment{}
+	err := svc.dbConnection()
+	if err != nil {
+		return props, err
+	}
+
+	if page < 1 {
+		return props, fmt.Errorf("Invalid page number %d", page)
+	}
+
+	if pageSize <= 0 {
+		return props, fmt.Errorf("Invalid page size %d", pageSize)
+	}
+
+	if orderBy != "updated_at" {
+		return props, fmt.Errorf("Invalid order by %s", orderBy)
+	}
+
+	if orderDir != "asc" && orderDir != "desc" {
+		return props, fmt.Errorf("Invalid order direction %s", orderDir)
+	}
+
+	boardID := svc.ConfigSvc.GetTrelloInheritanceConfinmentsBoardID()
+
+	// Calculate the offset
+	offset := (page - 1) * pageSize
+
+	query := fmt.Sprintf(`
+        SELECT * 
+		FROM inheritance_confinments 
+		WHERE board_id = $1 
+		ORDER BY %s %s 
+		LIMIT $2 OFFSET $3 
+    `, orderBy, orderDir)
+
+	err = svc.Db.Select(&props, query, boardID, pageSize, offset)
+	if err != nil {
+		return props, err
+	}
+
+	return props, nil
+}
+
+func (svc *dataService) retrieveInheritanceConfinmentByIDs(boardID string, propID string) (InheritanceConfinment, error) {
+	err := svc.dbConnection()
+	if err != nil {
+		return InheritanceConfinment{}, err
+	}
+
+	var props []InheritanceConfinment
+	query := `
+        SELECT * 
+		FROM inheritance_confinments
+		WHERE board_id = $1 
+		AND card_id = $2 
+		LIMIT 1
+    `
+
+	err = svc.Db.Select(&props, query, boardID, propID)
+	if err != nil {
+		return InheritanceConfinment{}, err
+	}
+
+	if len(props) == 0 {
+		return InheritanceConfinment{}, nil
+	}
+
+	return props[0], nil
+}
+
+func (svc *dataService) RetrieveInheritanceConfinmentAttachments(_ int) ([]string, error) {
+	var atts []string
+	err := svc.dbConnection()
+	if err != nil {
+		return atts, err
+	}
+
+	// TODO: The query seems to be returning some properties with empty attachments
+	query := `
+        SELECT location_en, name, attachments 
+		FROM inheritance_confinments
+		WHERE array_length(attachments, 1) > 0 
+    `
+
+	rows, err := svc.Db.Query(query)
+	if err != nil {
+		return atts, err
+	}
+	defer rows.Close()
+
+	var allAtts [][]string // Slice of url slices
+
+	// Iterate over the rows
+	for rows.Next() {
+		var location string
+		var name string
+		var tags []string
+		if err := rows.Scan(&location, &name, pq.Array(&tags)); err != nil {
+			return atts, err
+		}
+
+		// Add postfix to the attachment URL
+		enhancedTags := []string{}
+		for _, tag := range tags {
+			enhancedTags = append(enhancedTags, fmt.Sprintf("%s|inheritance_confinments|%s_%s", tag, normalizeString(location), normalizeString(name)))
+		}
+
+		allAtts = append(allAtts, enhancedTags)
+	}
+
+	// Flatten them into a single slice
+	for _, tagSet := range allAtts {
+		atts = append(atts, tagSet...)
+	}
+
+	return atts, nil
+}
+
+func (svc *dataService) NewSupportiveDoc(prop SupportiveDoc) (bool, int64, error) {
+	err := svc.dbConnection()
+	if err != nil {
+		return false, -1, err
+	}
+
+	// Make sure that property does not already exist
+	p, err := svc.retrieveSupportiveDocByIDs(prop.BoardID, prop.CardID)
+	if err != nil {
+		return false, -1, fmt.Errorf("Error fetching inh conf by ID: %v", err)
+	}
+
+	// If the property already exists, switch to update the attributes
+	if p.CardID != "" {
+		err = svc.UpdateSupportiveDoc(&prop)
+		return false, prop.ID, err
+	}
+
+	// Convert to args so it can be used with the database
+	args := map[string]interface{}{
+		"board_id":    prop.BoardID,
+		"card_id":     prop.CardID,
+		"name":        prop.Name,
+		"title":       prop.Title,
+		"category":    prop.Category,
+		"labels":      pq.Array(prop.Labels),
+		"attachments": pq.Array(prop.Attachments),
+		"comments":    pq.Array(prop.Comments),
+	}
+
+	// Execute the insert query using NamedExec or NamedQuery
+	rows, err := svc.Db.NamedQuery(insertsupportivedocSQL, args)
+	if err != nil {
+		return false, -1, err
+	}
+	defer rows.Close()
+
+	// Fetch the newly inserted ID if needed
+	if rows.Next() {
+		err = rows.Scan(&prop.ID)
+		if err != nil {
+			return false, -1, err
+		}
+	}
+
+	return true, prop.ID, nil
+}
+
+func (svc *dataService) UpdateSupportiveDoc(prop *SupportiveDoc) error {
+	err := svc.dbConnection()
+	if err != nil {
+		return err
+	}
+
+	// Make sure the property does exist
+	p, err := svc.retrieveSupportiveDocByIDs(prop.BoardID, prop.CardID)
+	if err != nil {
+		return fmt.Errorf("error fetching inh conf by ID: %v", err)
+	}
+
+	if p.CardID == "" {
+		return fmt.Errorf("card ID %s does not exist", p.CardID)
+	}
+
+	_, err = svc.Db.Exec(
+		updatesupportivedocSQL,
+		prop.BoardID,
+		prop.CardID,
+		prop.Name,
+		prop.Title,
+		prop.Category,
+		pq.Array(prop.Labels),
+		pq.Array(prop.Attachments),
+		pq.Array(prop.Comments),
+		p.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (svc *dataService) RetrieveSupportiveDocs(page, pageSize int, orderBy, orderDir string) ([]SupportiveDoc, error) {
+	props := []SupportiveDoc{}
+	err := svc.dbConnection()
+	if err != nil {
+		return props, err
+	}
+
+	if page < 1 {
+		return props, fmt.Errorf("Invalid page number %d", page)
+	}
+
+	if pageSize <= 0 {
+		return props, fmt.Errorf("Invalid page size %d", pageSize)
+	}
+
+	if orderBy != "updated_at" {
+		return props, fmt.Errorf("Invalid order by %s", orderBy)
+	}
+
+	if orderDir != "asc" && orderDir != "desc" {
+		return props, fmt.Errorf("Invalid order direction %s", orderDir)
+	}
+
+	boardID := svc.ConfigSvc.GetTrelloSupportiveDocsBoardID()
+
+	// Calculate the offset
+	offset := (page - 1) * pageSize
+
+	query := fmt.Sprintf(`
+        SELECT * 
+		FROM supportive_docs 
+		WHERE board_id = $1 
+		ORDER BY %s %s 
+		LIMIT $2 OFFSET $3 
+    `, orderBy, orderDir)
+
+	err = svc.Db.Select(&props, query, boardID, pageSize, offset)
+	if err != nil {
+		return props, err
+	}
+
+	return props, nil
+}
+
+func (svc *dataService) retrieveSupportiveDocByIDs(boardID string, propID string) (SupportiveDoc, error) {
+	err := svc.dbConnection()
+	if err != nil {
+		return SupportiveDoc{}, err
+	}
+
+	var props []SupportiveDoc
+	query := `
+        SELECT * 
+		FROM supportive_docs
+		WHERE board_id = $1 
+		AND card_id = $2 
+		LIMIT 1
+    `
+
+	err = svc.Db.Select(&props, query, boardID, propID)
+	if err != nil {
+		return SupportiveDoc{}, err
+	}
+
+	if len(props) == 0 {
+		return SupportiveDoc{}, nil
+	}
+
+	return props[0], nil
+}
+
+func (svc *dataService) RetrieveSupportiveDocAttachments(_ int) ([]string, error) {
+	var atts []string
+	err := svc.dbConnection()
+	if err != nil {
+		return atts, err
+	}
+
+	// TODO: The query seems to be returning some properties with empty attachments
+	query := `
+        SELECT location_en, name, attachments 
+		FROM supprotive_docs
+		WHERE array_length(attachments, 1) > 0 
+    `
+
+	rows, err := svc.Db.Query(query)
+	if err != nil {
+		return atts, err
+	}
+	defer rows.Close()
+
+	var allAtts [][]string // Slice of url slices
+
+	// Iterate over the rows
+	for rows.Next() {
+		var location string
+		var name string
+		var tags []string
+		if err := rows.Scan(&location, &name, pq.Array(&tags)); err != nil {
+			return atts, err
+		}
+
+		// Add postfix to the attachment URL
+		enhancedTags := []string{}
+		for _, tag := range tags {
+			enhancedTags = append(enhancedTags, fmt.Sprintf("%s|supportive_docs|%s_%s", tag, normalizeString(location), normalizeString(name)))
+		}
 
 		allAtts = append(allAtts, enhancedTags)
 	}
