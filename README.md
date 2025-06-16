@@ -72,12 +72,13 @@ These automations require Trello board IDs and and a Trello API Key:
 
 | Automation      | Description                       | Interval | 
 |-----------------|-----------------------------------|----------|
-| Properties Refresh            | Pull property cards from Trello using API  | Every day at 6:00 AM |
+| Attachments Refresh            | Pull attachment cards from Trello using API  | Every day at 6:00 AM |
+| Properties Refresh            | Pull property cards from Trello using API  | Every day at 7:00 AM |
 | Notion         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Notion properties database   | Triggered by Refresh |
-| Inheritance Confinments Refresh            | Pull inheritance confinments cards from Trello using API  | Every day at 7:00 AM |
-| Notion         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Notion inheritance confinments database   | Triggered by Refresh |
 | Supportive Docs Refresh            | Pull supportive docs cards from Trello using API  | Every day at 8:00 AM |
 | Notion         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Notion supportive docs database   | Triggered by Refresh |
+| Inheritance Confinments Refresh            | Pull inheritance confinments cards from Trello using API  | Every day at 9:00 AM |
+| Notion         | Upon the completion of the refresh, a webhook is triggered to run an automation to update Notion inheritance confinments database   | Triggered by Refresh |
 
 ## Phases
 
