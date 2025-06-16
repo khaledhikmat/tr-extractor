@@ -461,7 +461,7 @@ func (svc *dataService) RetrieveInheritanceConfinmentAttachments(_ int) ([]strin
 
 	// TODO: The query seems to be returning some properties with empty attachments
 	query := `
-        SELECT location_en, name, attachments 
+        SELECT generation, name, attachments 
 		FROM inheritance_confinments
 		WHERE array_length(attachments, 1) > 0 
     `
@@ -476,17 +476,17 @@ func (svc *dataService) RetrieveInheritanceConfinmentAttachments(_ int) ([]strin
 
 	// Iterate over the rows
 	for rows.Next() {
-		var location string
+		var generation int
 		var name string
 		var tags []string
-		if err := rows.Scan(&location, &name, pq.Array(&tags)); err != nil {
+		if err := rows.Scan(&generation, &name, pq.Array(&tags)); err != nil {
 			return atts, err
 		}
 
 		// Add postfix to the attachment URL
 		enhancedTags := []string{}
 		for _, tag := range tags {
-			enhancedTags = append(enhancedTags, fmt.Sprintf("%s|inheritance_confinments|%s_%s", tag, normalizeString(location), normalizeString(name)))
+			enhancedTags = append(enhancedTags, fmt.Sprintf("%s|inheritance_confinments|%d_%s", tag, generation, normalizeString(name)))
 		}
 
 		allAtts = append(allAtts, enhancedTags)
@@ -662,8 +662,8 @@ func (svc *dataService) RetrieveSupportiveDocAttachments(_ int) ([]string, error
 
 	// TODO: The query seems to be returning some properties with empty attachments
 	query := `
-        SELECT location_en, name, attachments 
-		FROM supprotive_docs
+        SELECT category, name, attachments 
+		FROM supportive_docs
 		WHERE array_length(attachments, 1) > 0 
     `
 
@@ -677,17 +677,17 @@ func (svc *dataService) RetrieveSupportiveDocAttachments(_ int) ([]string, error
 
 	// Iterate over the rows
 	for rows.Next() {
-		var location string
+		var category string
 		var name string
 		var tags []string
-		if err := rows.Scan(&location, &name, pq.Array(&tags)); err != nil {
+		if err := rows.Scan(&category, &name, pq.Array(&tags)); err != nil {
 			return atts, err
 		}
 
 		// Add postfix to the attachment URL
 		enhancedTags := []string{}
 		for _, tag := range tags {
-			enhancedTags = append(enhancedTags, fmt.Sprintf("%s|supportive_docs|%s_%s", tag, normalizeString(location), normalizeString(name)))
+			enhancedTags = append(enhancedTags, fmt.Sprintf("%s|supportive_docs|%s_%s", tag, normalizeString(category), normalizeString(name)))
 		}
 
 		allAtts = append(allAtts, enhancedTags)
