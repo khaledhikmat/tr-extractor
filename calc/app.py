@@ -355,7 +355,8 @@ def main():
 
         if st.sidebar.button("Logout"):
             st.session_state["logged_in"] = False
-            st.experimental_rerun()
+            #st.experimental_rerun()
+            st.stop()
 
 if __name__ == "__main__":
     main()
