@@ -1,0 +1,812 @@
+[
+    {
+        "name": "Akraba-782",
+        "lot": "782",
+        "description": "Historic family land in the Akraba district, originally acquired by Nazeera al chamaa in the late 19th century.",
+        "location": "Akraba",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 22273.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 241.67,
+        "owner": "Nazeerah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": []
+    },
+    {
+        "name": "7osh sh3eer-4",
+        "lot": "4",
+        "description": "Historic family land in the 7osh sh3eer district, originally acquired by Asaad Shamaa in the late 19th century.",
+        "location": "7osh sh3eer",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 7660.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 62.5,
+        "owner": "Asaad Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": true,
+        "documents": []
+    },
+    {
+        "name": "3araba-783",
+        "lot": "783",
+        "description": "Historic family land in the 3araba district, originally acquired by Nazeerah in the late 19th century.",
+        "location": "3araba",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 22273.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 241.67,
+        "owner": "Nazeerah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/6812178fe0fb7016d4d10184-3araba_783.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Shabaa-151",
+        "lot": "151",
+        "description": "Historic family land in the Shabaa district, originally acquired by Aziza Alchamaa in the late 19th century.",
+        "location": "Shabaa",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 1270000.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 27.37,
+        "owner": "Azeezah Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": true,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680d2196eb8108d55576c37d-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680d26350a104ce85af82465-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da4637d15ded2b769fb47-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da4b0569837b1ac00b2d4-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da4b072ebdba61ab9a320-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da4b03d397e02e0740911-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da4b09c6b000cb8fd482b-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da4dcf999103c537c49f8-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da614f78dc802a7cc23bf-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680e44625427925d144755c3-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680e446267c8f39ad7c91611-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680e4462374d6f3a953ce7ec-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680e4462bb599ff1bb8036eb-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680e44625ff94279e1d27084-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680e446252eb3d54c1cb3efb-shabaa_151.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/682954a7372ce6b9853df43c-shabaa_151.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Shabaa-150",
+        "lot": "150",
+        "description": "Historic family land in the Shabaa district, originally acquired by Aziza Alchamaa in the late 19th century.",
+        "location": "Shabaa",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 11311.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 27.37,
+        "owner": "Azeezah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": false,
+        "effects": true,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680d22185dfd682781dce23b-shabaa_150.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680d229fa735030dbf009a78-shabaa_150.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da5b9aecb8804ab0d1221-shabaa_150.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Shabaa-125",
+        "lot": "125",
+        "description": "Historic family land in the Shabaa district, originally acquired by Aziza Alchamaa in the late 19th century.",
+        "location": "Shabaa",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 85036.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 43.0,
+        "owner": "Azeezah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680d21fa03734a3a24e5854c-shabaa_125.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da533167b6bd28f848f00-shabaa_125.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Shabaa-124",
+        "lot": "124",
+        "description": "Historic family land in the Shabaa district, originally acquired by Aziza Alchamaa in the late 19th century.",
+        "location": "Shabaa",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 23011.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 27.37,
+        "owner": "Azeezah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da59fb24688d61a752842-shabaa_124.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/6838a562558d635367d2fb9d-shabaa_124.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Shabaa-123",
+        "lot": "123",
+        "description": "Historic family land in the Shabaa district, originally acquired by Aziza Alchamaa in the late 19th century.",
+        "location": "Shabaa",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 6823.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 27.37,
+        "owner": "Azeezah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680d225fd7b42f3dfed104a4-shabaa_123.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680d27f17eb8f919e428d404-shabaa_123.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da52462d426384d154dd3-shabaa_123.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Shabaa-122",
+        "lot": "122",
+        "description": "Historic family land in the Shabaa district, originally acquired by Aziza Alchamaa in the late 19th century.",
+        "location": "Shabaa",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 23552.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 27.37,
+        "owner": "Azeezah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680d227baa51fa8a736ba20f-shabaa_122.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da515fab0fe2edee37c1d-shabaa_122.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Shabaa-117",
+        "lot": "117",
+        "description": "Historic family land in the Shabaa district, originally acquired by Aziza Alchamaa in the late 19th century.",
+        "location": "Shabaa",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 7865.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 27.37,
+        "owner": "Azeezah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680d22f23cae32fdd577aac0-shabaa_117.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680da54452eb3d54c155bb72-shabaa_117.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "East Dummar-146",
+        "lot": "146",
+        "description": "Historic family land in the East Dummar district, originally acquired by Rest of Nazem inheritors in the late 19th century.",
+        "location": "East Dummar",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 3827.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 23.99,
+        "owner": "Nazem Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": []
+    },
+    {
+        "name": "East Dummar-146",
+        "lot": "146",
+        "description": "Historic family land in the East Dummar district, originally acquired by Rest of Nazira alchamaa inheritors in the late 19th century.",
+        "location": "East Dummar",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 3827.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 57.78,
+        "owner": "Nazeerah Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": []
+    },
+    {
+        "name": "East Dummar-146",
+        "lot": "146",
+        "description": "Historic family land in the East Dummar district, originally acquired by Asaad in the late 19th century.",
+        "location": "East Dummar",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 3827.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 23.99,
+        "owner": "Asaad Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": []
+    },
+    {
+        "name": "East Dummar-151",
+        "lot": "151",
+        "description": "Historic family land in the East Dummar district, originally acquired by Adnan Alkhani in the late 19th century.",
+        "location": "East Dummar",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 9934.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 8.0,
+        "owner": "Adnan Khani",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": []
+    },
+    {
+        "name": "East Dummar-151",
+        "lot": "151",
+        "description": "Historic family land in the East Dummar district, originally acquired by Daad alkhani in the late 19th century.",
+        "location": "East Dummar",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 9934.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 4.0,
+        "owner": "Daad Khani",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": []
+    },
+    {
+        "name": "East Dummar-151",
+        "lot": "151",
+        "description": "Historic family land in the East Dummar district, originally acquired by Rest of Nazira inheritors in the late 19th century.",
+        "location": "East Dummar",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 9934.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 57.78,
+        "owner": "Nazeerah Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": []
+    },
+    {
+        "name": "East Dummar-1544",
+        "lot": "1544",
+        "description": "Historic family land in the East Dummar district, originally acquired by Rest of Ahmad Rafik alchamaa inheritors in the late 19th century.",
+        "location": "East Dummar",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 5503.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 2400.0,
+        "owner": "Ahmad Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/6833304853494983f2a15c3b-east_dummar_1544.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "East Dummar-151",
+        "lot": "151",
+        "description": "Historic family land in the East Dummar district, originally acquired by Res Aziza al chamaa inheritors in the late 19th century.",
+        "location": "East Dummar",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 9934.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 72.0,
+        "owner": "Azeezah Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68241e5deba040b6491f5fda-east_dummar_151.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "East Dummar-146",
+        "lot": "146",
+        "description": "Historic family land in the East Dummar district, originally acquired by Rest of Aziza chamaa inheritors in the late 19th century.",
+        "location": "East Dummar",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 3827.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 23.99,
+        "owner": "Azeezah Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68241e46e7fce4617673aec6-east_dummar_146.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68241e7e06f91ca4341a5885-east_dummar_146.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Quatana-189",
+        "lot": "189",
+        "description": "Historic family land in the Quatana district, originally acquired by Nazeerah in the late 19th century.",
+        "location": "Quatana",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 31.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 75.0,
+        "owner": "Nazeerah",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/680d30b1e2f4248ec9cb7c05-quatana_189.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Qanawat-338",
+        "lot": "338",
+        "description": "Historic family land in the Qanawat district, originally acquired by Rest of Ahamd rafik alchamaa inheritors in the late 19th century.",
+        "location": "Qanawat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 2674.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 2210.0,
+        "owner": "Ahmad Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68342e101dad2769cccf1bdb-qanawat_338.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Qanawat-343",
+        "lot": "343",
+        "description": "Historic family land in the Qanawat district, originally acquired by Rest of Nazira Al chamaa Inheritors in the late 19th century.",
+        "location": "Qanawat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 260.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 198.4,
+        "owner": "Nazeerah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68341848593778e5a1944837-qanawat_343#_1.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Qanawat-1061/HGFBJ",
+        "lot": "1061/HGFBJ",
+        "description": "Historic family land in the Qanawat district, originally acquired by Rest of Ahamd Rafik alchamaa inheritors in the late 19th century.",
+        "location": "Qanawat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 274.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 491.29,
+        "owner": "Ahmad Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/683331795ea5da9e70fb941c-qanawat_1061.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/6833317b641c6c4bd7ec7607-qanawat_1061.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/6833317e7703f1ed35f0a81d-qanawat_1061.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/683331a1752b8e82a634bc47-qanawat_1061.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Qanawat-1319",
+        "lot": "1319",
+        "description": "Historic family land in the Qanawat district, originally acquired by Rest of Ahmad rafik alchamaa inheritors in the late 19th century.",
+        "location": "Qanawat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 1247.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 2100.0,
+        "owner": "Ahmad Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/6833322859a3feeabe4c06f1-qanawat_1319.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Quanawat-346#1",
+        "lot": "346#1",
+        "description": "Historic family land in the Quanawat district, originally acquired by Rest of Aziza Al chamaa inheritors in the late 19th century.",
+        "location": "Quanawat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 700.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 126.0,
+        "owner": "Azeezah Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68119df915ead1562c753dc0-quanawat_346#1.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/681cd75425fe323247b7ab88-quanawat_346#1.png"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/682419a9a50c42c635cef23d-quanawat_346#1.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68341de4803e587c95b3c67f-quanawat_346/1.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Quanawat-436",
+        "lot": "436",
+        "description": "Historic family land in the Quanawat district, originally acquired by Aziza Alchamaa in the late 19th century.",
+        "location": "Quanawat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 82.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 126.0,
+        "owner": "Azeezah Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68119d9493227a8ccff105e7-quanawat_436.jpeg"
+            },
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/683418d183f200b9836c9ecc-quanawat_436.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Quanwat-510",
+        "lot": "510",
+        "description": "Historic family land in the Quanwat district, originally acquired by Nazeerah in the late 19th century.",
+        "location": "Quanwat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 385.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 54.0,
+        "owner": "Nazeerah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68332f1e31cbc892ae111b6f-quanwat_510.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Quanwat-343",
+        "lot": "343",
+        "description": "Historic family land in the Quanwat district, originally acquired by Rest of Aziza  inheritors in the late 19th century.",
+        "location": "Quanwat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 260.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 89.96,
+        "owner": "Azeezah Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68341813d02afa93c60a63a5-quanwat_343.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Quanawat-1060",
+        "lot": "1060",
+        "description": "Historic family land in the Quanawat district, originally acquired by Ahmad Rafik Alchamaa inheritors in the late 19th century.",
+        "location": "Quanawat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 31.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 2400.0,
+        "owner": "Ahmad Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/683330ef7f2547bf2c0978cb-quanawat_1060.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Quanawat-1059",
+        "lot": "1059",
+        "description": "Historic family land in the Quanawat district, originally acquired by Rest Ahmad Rafik alchamaa Inheritors in the late 19th century.",
+        "location": "Quanawat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 213.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 2400.0,
+        "owner": "Ahmad Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": [
+            {
+                "type": "photo",
+                "url": "https://tr-extractor.s3.us-east-2.amazonaws.com/properties/68332ecf8e2eb314634e6919-quanawat_1059.jpeg"
+            }
+        ]
+    },
+    {
+        "name": "Quanawat-1061",
+        "lot": "1061",
+        "description": "Historic family land in the Quanawat district, originally acquired by Rest of Ahmad Rafik alchamaa inheritors in the late 19th century.",
+        "location": "Quanawat",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 274.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 430.21,
+        "owner": "Ahmad Shamaa",
+        "possessed": false,
+        "unsold": true,
+        "organized": true,
+        "effects": false,
+        "documents": []
+    },
+    {
+        "name": "East Dummar-1544",
+        "lot": "1544",
+        "description": "Historic family land in the East Dummar district, originally acquired by Rest of Ahmad Rafik Alchamaa inheritors in the late 19th century.",
+        "location": "East Dummar",
+        "city": "Damascus",
+        "country": "Syria",
+        "area": 5503.0,
+        "area_unit": "square meters",
+        "square_meter_price": 10.0,
+        "shares": 0.0,
+        "owner": "Ahmad Shamaa",
+        "possessed": true,
+        "unsold": true,
+        "organized": false,
+        "effects": false,
+        "documents": []
+    }
+]
