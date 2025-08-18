@@ -31,3 +31,6 @@ ignore
 sample*
 dumps*
 cookies*
+
+properties.json
+persons.json
