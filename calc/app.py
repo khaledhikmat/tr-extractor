@@ -159,7 +159,7 @@ def dashboard():
 
     st.subheader("Persons Status")
     fig = px.pie(
-        names=["Alive 🟢", "Deceased ⚰️"],
+        names=["Alive", "Deceased"],
         values=[alive_count, deceased_count],
         color_discrete_sequence=px.colors.sequential.RdBu
     )
@@ -167,7 +167,7 @@ def dashboard():
 
     st.subheader("Properties Categories")
     fig = px.pie(
-        names=["Possessed 🏠", "Unsold 🏚️", "Organized 📦", "Effects 🎭"],
+        names=["Possessed", "Unsold", "Organized", "Effects"],
         values=[possessed_count, unsold_count, organized_count, effects_count],
         color_discrete_sequence=px.colors.sequential.Plasma
     )
@@ -201,7 +201,7 @@ def persons():
             for child in person.get("children", []):
                 st.markdown(f"- {child}")
 
-            st.markdown("### 🧑‍🤝👰‍♀️ Spouses")
+            st.markdown("### 🤝 Spouses")
             for spouse in person.get("spouses", []):
                 st.markdown(f"- {spouse }")
 
@@ -212,7 +212,7 @@ def persons():
                 if url:
                     st.markdown(f"- [{label}]({url})")
 
-        st.markdown("### 🏡 Properties Owned")
+        st.markdown("### 🏡 Owned Properties")
         owned_props = [p for p in properties_data if p['owner'] == person['name']]
         if owned_props:
             df_owned = pd.DataFrame([{
