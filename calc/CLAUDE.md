@@ -49,7 +49,7 @@ streamlit run app.py
 
 **AWS Integration**
 - `generate_presigned_url()`: Converts S3 URLs to time-limited access URLs
-- Configured for `us-east-1` region with 3600 second expiry
+- Configured for `us-east-2` region with 3600 second expiry
 
 **Data Visualization**
 - Uses Plotly Express for pie charts showing person/property status distributions

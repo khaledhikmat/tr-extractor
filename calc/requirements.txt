@@ -3,3 +3,8 @@ plotly
 boto3
 psycopg[binary]
 python-dotenv
+pandas
+numpy
+matplotlib
+seaborn
+reportlab

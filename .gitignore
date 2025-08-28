@@ -31,6 +31,8 @@ ignore
 sample*
 dumps*
 cookies*
+__pycache__*
 
 properties.json
 persons.json
+*.pdf
