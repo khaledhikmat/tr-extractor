@@ -533,7 +533,9 @@ class InheritanceReportGenerator:
             
             "7. **Price per Square Meter**: Estimated value at $100 per sqm for all properties. This may or may not be accurate.",
             
-            "8. **Selected Properties**: The only properties that are considered for this report are those that have owner, area, shares and unsold."
+            "8. **Selected Properties**: The only properties that are considered for this report are those that have owner, area, shares and unsold.",
+            
+            "9. **Ownership**: It is assumed that the selected properties are fully owned by the designated owner and that no downstream claims exist."
         ]
         
         for rec in recommendations:
